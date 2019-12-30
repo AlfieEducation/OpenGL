@@ -112,4 +112,8 @@ void Shader::compileShaders(const char* vShaderCode, const char* fShaderCode)
 
 	uniformAmbientColour = glGetUniformLocation(shader, "directionalLight.colour");
 	uniformAmbientIntensity = glGetUniformLocation(shader, "directionalLight.ambientIntensity");
+
+	uniformDirection = glGetUniformLocation(shader, "directionalLight.direction");
+	uniformDiffuseIntensity = glGetUniformLocation(shader, "directionalLight.diffuseIntensity");
+
 }

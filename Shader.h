@@ -16,10 +16,13 @@ public:
 	GLuint GetViewLocation() { return this->uniformView;  }
 	GLuint GetAmbientColourLocation() { return this->uniformAmbientColour; }
 	GLuint GetAmbientIntensityLocation() { return this->uniformAmbientIntensity; }
+	GLuint GetDiffuseIntensityLocation() { return this->uniformDiffuseIntensity; }
+	GLuint GetDirectionLocation() { return this->uniformDirection; }
 
 	~Shader();
 private:
-	GLuint shader, uniformModel, uniformProjection, uniformView, uniformAmbientIntensity, uniformAmbientColour;
+	GLuint shader, uniformModel, uniformProjection, uniformView, uniformAmbientIntensity, 
+		uniformAmbientColour, uniformDiffuseIntensity, uniformDirection ;
 	std::string readShaderCodeFromFile(const char* shaderPath);
 	void addShader(GLuint theProgram, const char* shaderCode, GLenum shaderType);
 	void compileShaders(const char* vShaderCode, const char* fShaderCode);
