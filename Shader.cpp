@@ -116,4 +116,8 @@ void Shader::compileShaders(const char* vShaderCode, const char* fShaderCode)
 	uniformDirection = glGetUniformLocation(shader, "directionalLight.direction");
 	uniformDiffuseIntensity = glGetUniformLocation(shader, "directionalLight.diffuseIntensity");
 
+	uniformSpecularIntensity = glGetUniformLocation(shader, "material.specularIntensity");
+	uniformShininess = glGetUniformLocation(shader, "material.shininess");
+	uniformEyePosition = glGetUniformLocation(shader, "eyePosition");
+
 }

@@ -2,8 +2,8 @@
 
 Window::Window()
 {
-	width = 800;
-	height = 600;
+	width = 1024;
+	height = 768;
 	bufferWidth = 0, bufferHeight = 0;
 	mainWindow = 0;
 
