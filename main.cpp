@@ -14,7 +14,7 @@
 #include "Shader.h"
 #include "Camera.h"
 #include "Texture.h"
-#include "Light.h"
+#include "DirectionalLight.h"
 #include "Material.h"
 
 
@@ -29,7 +29,7 @@ Camera camera;
 Texture brickTexture;
 Texture dirtTexture;
 
-Light mainLight;
+DirectionalLight mainLight;
 
 Material shinyMaterial;
 Material dullMaterial;
@@ -138,11 +138,8 @@ int main()
 	shinyMaterial = Material(1.0f, 32);
 	dullMaterial = Material(0.3f, 4);
 
-	mainLight = Light(1.0f, 1.0f, 1.0f, 0.2f, 
-					2.0f, -1.0f, -2.0f, 0.3f);
-
-
-	
+	mainLight = DirectionalLight(1.0f, 1.0f, 1.0f, 0.2f, 0.3f,
+								 2.0f, -1.0f, -2.0f);
 
 	GLuint uniformModel = 0, uniformProjection = 0, uniformView = 0, 
 			uniformAmbientIntensity = 0, uniformAmbientColour = 0, uniformDirection = 0, uniformDiffuseIntensity = 0,
