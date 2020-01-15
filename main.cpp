@@ -18,6 +18,7 @@
 #include "Texture.h"
 #include "DirectionalLight.h"
 #include "PointLight.h"
+#include "SpotLight.h"
 #include "Material.h"
 
 
@@ -35,6 +36,7 @@ Texture plainTexture;
 
 DirectionalLight mainLight;
 PointLight pointLights[MAX_POINT_LIGHTS];
+SpotLight spotLights[MAX_SPOT_LIGHTS];
 
 Material shinyMaterial;
 Material dullMaterial;
@@ -163,25 +165,76 @@ int main()
 	shinyMaterial = Material(4.0f, 256);
 	dullMaterial = Material(0.3f, 4);
 
-	mainLight = DirectionalLight(1.0f, 1.0f, 1.0f, 0.2f, 0.3f,
-								 2.0f, -1.0f, -2.0f);
+	mainLight = DirectionalLight(1.0f, 1.0f, 1.0f, 
+								 0.1f, 0.1f,
+								 0.0f, 0.0f, -1.0f);
 
 	unsigned int pointLightCount = 0;
 
 	pointLights[0] = PointLight(0.0f, 0.0f, 1.0f,
-								0.1f, 1.0f,
-								4.0f, 0.0f, 0.0f,
+								0.0f, 0.1f,
+								0.0f, 0.0f, 0.0f,
 								0.3f, 0.2f, 0.1f);
 	
 	pointLightCount++;
 
 	pointLights[1] = PointLight(0.0f, 1.0f, 0.0f,
-								0.1f, 1.0f,
+								0.0f, 0.1f,
 								-4.0f, 2.0f, 0.0f,
 								0.3f, 0.1f, 0.1f);
 
 	pointLightCount++;
 	
+	unsigned int spotLightCount = 0;
+
+	spotLights[0] = SpotLight(1.0f, 1.0f, 1.0f,
+							  0.0f, 2.0f,
+							  0.0f, 0.0f, 0.0f,
+							  0.0f, -1.0f, 0.0f,
+							  1.0f, 0.0f, 0.0f,
+							  20.0f);
+
+	spotLightCount++;
+
+	spotLights[1] = SpotLight(1.0f, 1.0f, 1.0f,
+		0.0f, 1.0f,
+		0.0f, -1.5f, 0.0f,
+		-100.0f, -1.0f, 0.0f,
+		1.0f, 0.0f, 0.0f,
+		20.0f);
+	spotLightCount++;
+
+
+	/*spotLights[2] = SpotLight(1.0f, 1.0f, 1.0f,
+		0.0f, 0.5f,
+		0.0f, -1.5f, 0.0f,
+		-10.0f, 2.0f, -7.0f,
+		1.0f, 0.0f, 0.0f,
+		30.0f);
+	spotLightCount++;
+
+	/*spotLights[1] = SpotLight(1.0f, 1.0f, .8f,
+		-.0f, 1.0f,
+		-1.0f, 5.0f, -7.0f,
+		0.0f, -1.0f, 0.0f,
+		1.0f, 0.0f, 0.0f,
+		40.0f);
+	spotLightCount++;
+	spotLights[2] = SpotLight(1.0f, 1.0f, 1.0f,
+		0.0f, 0.5f,
+		0.0f, -1.5f, 0.0f,
+		-10.0f, 2.0f, -7.0f,
+		1.0f, 0.0f, 0.0f,
+		30.0f);
+	spotLightCount++;
+	/*spotLights[3] = SpotLight(1.0f, 1.0f, 1.0f,
+		0.0f, 0.5f,
+		0.0f, 1.5f, 0.0f,
+		10.0f, -1.0f, -8.0f,
+		1.0f, 0.0f, 0.0f,
+		30.0f);
+	spotLightCount++;*/
+
 	GLuint uniformModel = 0, uniformProjection = 0, uniformView = 0, 
 			uniformSpecularIntensity = 0, uniformEyePosition = 0, uniformShininess = 0;
 	glm::mat4 projection = glm::perspective(45.0f, (GLfloat)mainWindow.getBufferWidth() / (GLfloat)mainWindow.getBufferHeight(), 0.1f, 100.0f);
@@ -212,8 +265,15 @@ int main()
 		uniformSpecularIntensity = shaderList[0].GetSpecularIntensityLocation();
 		uniformShininess = shaderList[0].GetShininessLocation();
 
+
+		glm::vec3 lowerLight = camera.getCameraPosition();
+		lowerLight.y -= 0.3f;
+		spotLights[0].SetFlash(lowerLight, camera.getCameraDirection());
+
 		shaderList[0].SetDirectionalLight(&mainLight);
 		shaderList[0].SetPointLights(pointLights, pointLightCount);
+		shaderList[0].SetSpotLights(spotLights, spotLightCount);
+
 
 		glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
 		glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.calculateViewMatrix()));
@@ -233,9 +293,9 @@ int main()
 		model = glm::translate(model, glm::vec3(0.0f, 4.0f, -2.5f));
 		//model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
-		dullMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		//glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
 		dirtTexture.UseTexture();
+		dullMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[1]->RenderMesh();
 
 
@@ -243,8 +303,8 @@ int main()
 		model = glm::translate(model, glm::vec3(0.0f, -2.0f, 0.0f));
 		//model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
-		plainTexture.UseTexture();
+		//glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
+		dirtTexture.UseTexture();
 		shinyMaterial.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[2]->RenderMesh();
 
