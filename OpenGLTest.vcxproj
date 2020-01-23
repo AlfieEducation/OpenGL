@@ -64,20 +64,20 @@
   <PropertyGroup />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)/../../../External Libs\GLFW\include;$(SolutionDir)/../../../External Libs\GLM\;$(SolutionDir)/../../../External Libs\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/../../../External Libs\GLFW\include;$(SolutionDir)/../../../External Libs\GLM\;$(SolutionDir)/../../../External Libs\GLEW\include;$(SolutionDir)/../../../External Libs\ASSIMP\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)/../../../External Libs/GLEW/lib/Release/Win32;$(SolutionDir)/../../../External Libs/GLFW/lib-vc2015;$(SolutionDir)/../../../External Libs/GLEW/lib/Release/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)/../../../External Libs/GLEW/lib/Release/Win32;$(SolutionDir)/../../../External Libs/GLFW/lib-vc2015;$(SolutionDir)/../../../External Libs/GLEW/lib/Release/x64;$(SolutionDir)/../../../External Libs/ASSIMP/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)/../../../External Libs\GLFW\include;$(SolutionDir)/../../../External Libs\GLM\;$(SolutionDir)/../../../External Libs\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/../../../External Libs\GLFW\include;$(SolutionDir)/../../../External Libs\GLM\;$(SolutionDir)/../../../External Libs\GLEW\include;$(SolutionDir)/../../../External Libs\ASSIMP\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)/../../../External Libs/GLEW/lib/Release/Win32;$(SolutionDir)/../../../External Libs/GLFW/lib-vc2015;$(SolutionDir)/../../../External Libs/GLEW/lib/Release/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)/../../../External Libs/GLEW/lib/Release/Win32;$(SolutionDir)/../../../External Libs/GLFW/lib-vc2015;$(SolutionDir)/../../../External Libs/GLEW/lib/Release/x64;$(SolutionDir)/../../../External Libs/ASSIMP/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -105,6 +105,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="Model.cpp" />
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SpotLight.cpp" />
@@ -118,6 +119,7 @@
     <ClInclude Include="Light.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SpotLight.h" />
