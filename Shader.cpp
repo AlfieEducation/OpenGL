@@ -76,6 +76,21 @@ void Shader::addShader(GLuint theProgram, const char* shaderCode, GLenum shaderT
 	glAttachShader(theProgram, theShader);
 }
 
+void Shader::SetTexture(GLuint textureUnit)
+{
+	glUniform1i(uniformTexture, textureUnit);
+}
+
+void Shader::SetDirectionalShadowMap(GLuint textureUnit)
+{
+	glUniform1i(uniformDirectionalShadowMap, textureUnit);
+}
+
+void Shader::SetDirectionalLightTransform(glm::mat4 * lTransform)
+{
+	glUniformMatrix4fv(uniformDirectionalLightTransform, 1, GL_FALSE, glm::value_ptr(*lTransform));
+}
+
 void Shader::UseShader() 
 {
 	glUseProgram(this->shader); 
@@ -276,5 +291,9 @@ void Shader::compileShaders(const char* vShaderCode, const char* fShaderCode)
 		snprintf(locBuff, sizeof(locBuff), "spotLights[%d].edge", i);
 		uniformSpotLight[i].uniformEdge = glGetUniformLocation(shader, locBuff);
 	}
+
+	uniformTexture = glGetUniformLocation(shader, "theTexture");
+	uniformDirectionalLightTransform = glGetUniformLocation(shader, "directionalLightTransform");
+	uniformDirectionalShadowMap = glGetUniformLocation(shader, "directionalShadowMap");
 
 }
